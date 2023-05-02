@@ -1,0 +1,2 @@
+# cv2_tesseract
+This snippet combines the functionality of OpenCV (cv2) and Tesseract to extract text from video sources. It was initially developed for the purpose of gathering news topics, showcasing the efficiency of combining computer vision and optical character recognition technology.
