@@ -6,10 +6,12 @@ import pytesseract
 
 os.chdir('<insert_path>')
 
+# list of days (1 corresponds to monday, 2 to tuesday etc.)
 days = ['monday', 'friday', 'thursday', 'wednesday', 'tuesday', 'monday', 'friday', 'thursday', 'wednesday', 'tuesday', 'monday']
 
+# loop through all the videos for each weekday
 for i in range(7):
-
+    # create images from the videos
     vidcap = cv2.VideoCapture('tet' + str(i) + '.mp4')
     success, image = vidcap.read()
     count = 0
@@ -36,13 +38,16 @@ for i in range(7):
     headlines = open('heads.txt', 'a')
     headlines.write(days[i])
 
+    # look for headlines in each 250th frame
     for j in range(500,7000,250):
         try:
             bali = Image.open('%sframe%d.jpg' % (i, j))
+            # crop and convert images to black and white
             cropIt = bali.crop((147,600,900,652))
             gray = cropIt.convert('L')
             bw = gray.point(lambda x: 0 if x < 128 else 255, '1')
             bw.save('2nrk' + str(j) + '.png')
+            # use tesseract to get text from images
             text = pytesseract.image_to_string(Image.open('2nrk' + str(j) +'.png'), lang="nor")
             headlines.write(text + '\n')
         except:
